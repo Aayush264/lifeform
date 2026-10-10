@@ -328,37 +328,25 @@ app.get(
   }
 );
 
-// ==============================
-// ANALYZE IMAGE
-// ==============================
+
+ // ==============================
+ // ANALYZE IMAGE
+ // ==============================
 
 app.post(
   "/api/analyze",
   upload.single("image"),
-
   async (req, res) => {
     try {
       if (!req.file) {
         return res.status(400).json({
-          error:
-            "No image was uploaded."
+          error: "No image was uploaded."
         });
       }
 
-      console.log(
-        "Image received:",
-        req.file.filename
-      );
+      console.log("Image received:", req.file.filename);
 
-      const response =
-        await ollama.chat({
-          model: "gemma3:4b",
-
-          messages: [
-            {
-              role: "user",
-
-              content: `
+      const prompt = `
 You are the AI naturalist for a game called Lifeform.
 
 Look carefully at the uploaded image and identify the lifeform if possible.
@@ -373,41 +361,75 @@ Description:
 [2-3 simple sentences about what is visible and interesting about it]
 
 Do not invent details that cannot be seen in the image.
-              `,
+      `;
 
-              images: [
-                req.file.path
-              ]
+      let result;
+
+      if (process.env.GEMINI_API_KEY) {
+        // Hosted AI for the deployed app
+        const {
+          GoogleGenAI,
+          createUserContent,
+          createPartFromUri
+        } = await import("@google/genai");
+
+        const ai = new GoogleGenAI({
+          apiKey: process.env.GEMINI_API_KEY
+        });
+
+        const uploadedImage = await ai.files.upload({
+          file: req.file.path,
+          config: {
+            mimeType: req.file.mimetype
+          }
+        });
+
+        const response = await ai.models.generateContent({
+          model: "gemma-4-26b-a4b-it",
+          contents: createUserContent([
+            createPartFromUri(
+              uploadedImage.uri,
+              uploadedImage.mimeType
+            ),
+            prompt
+          ])
+        });
+
+        result = response.text;
+      } else {
+        // Local AI for development
+        const response = await ollama.chat({
+          model: "gemma3:4b",
+          messages: [
+            {
+              role: "user",
+              content: prompt,
+              images: [req.file.path]
             }
           ]
         });
 
-      const imageUrl =
-        `/uploads/${req.file.filename}`;
+        result = response.message.content;
+      }
+
+      if (!result) {
+        throw new Error("The AI returned an empty response.");
+      }
 
       res.json({
-        result:
-          response.message.content,
-
-        imageUrl
+        result,
+        imageUrl: `/uploads/${req.file.filename}`
       });
 
     } catch (error) {
-      console.error(
-        "Image analysis error:",
-        error
-      );
+      console.error("Image analysis error:", error);
 
       if (req.file) {
-        fs.unlink(
-          req.file.path,
-          () => {}
-        );
+        fs.unlink(req.file.path, () => {});
       }
 
       res.status(500).json({
-        error:
-          "Could not analyze the image.",
+        error: "Could not analyze the image.",
         details: error.message
       });
     }
