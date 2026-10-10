@@ -1,0 +1,694 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+
+  <title>
+    Lifeform — Explore. Discover. Build.
+  </title>
+
+  <link
+    rel="stylesheet"
+    href="/styles.css"
+  >
+
+</head>
+
+<body>
+
+  <main class="app">
+
+    <!-- =====================================
+         HERO
+    ====================================== -->
+
+    <header class="hero">
+
+      <div class="eyebrow">
+        REAL WORLD. REAL DISCOVERIES.
+      </div>
+
+      <h1>
+        Lifeform
+        <span class="logo-sprout">🌱</span>
+      </h1>
+
+      <p>
+        Step outside. Find something living. Scan it.
+        Build your collection one discovery at a time.
+      </p>
+
+    </header>
+
+
+    <!-- =====================================
+         PLAYER PROGRESS
+    ====================================== -->
+
+    <section class="progress-card">
+
+      <div class="progress-top">
+
+        <div>
+
+          <div class="section-label">
+            YOUR JOURNEY
+          </div>
+
+          <h2 id="level">
+            Level 1 — New Explorer
+          </h2>
+
+        </div>
+
+
+        <div class="progress-stats">
+
+          <div class="streak-display">
+
+            <div class="streak-icon">
+              🔥
+            </div>
+
+            <div>
+
+              <div class="section-label">
+                STREAK
+              </div>
+
+              <strong id="streak">
+                0 days
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="xp-display">
+
+            ⭐
+            <span id="xp">0</span>
+            XP
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <div class="progress-bar">
+
+        <div
+          id="xpFill"
+          class="progress-fill"
+        ></div>
+
+      </div>
+
+
+      <p
+        id="progressNote"
+        class="progress-note"
+      >
+        50 XP until Level 2
+      </p>
+
+    </section>
+
+
+    <!-- =====================================
+         ACHIEVEMENTS
+    ====================================== -->
+
+    <section class="card achievements-section">
+
+      <div class="collection-header">
+
+        <div class="card-heading">
+
+          <span>🏅</span>
+
+          <div>
+
+            <h2>
+              Achievements
+            </h2>
+
+            <p>
+              Little milestones on your journey.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="achievementCount"
+          class="collection-count"
+        >
+          0 / 6 unlocked
+        </div>
+
+      </div>
+
+
+      <div
+        id="achievements"
+        class="achievements-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =====================================
+         DAILY MISSION
+    ====================================== -->
+
+    <section class="mission-card">
+
+      <div class="mission-content">
+
+        <div class="section-label">
+          TODAY'S OUTDOOR MISSION
+        </div>
+
+        <h2 id="missionTitle">
+          🌿 Find a plant
+        </h2>
+
+        <p id="missionDescription">
+          Find a plant outdoors and scan it.
+        </p>
+
+      </div>
+
+
+      <button
+        id="missionButton"
+        class="mission-button"
+      >
+        📷 Scan to Complete
+      </button>
+
+    </section>
+
+
+    <!-- =====================================
+         SCANNER + DISCOVERY
+    ====================================== -->
+
+    <section class="main-grid">
+
+
+      <!-- SCANNER -->
+
+      <div class="card scanner-card">
+
+        <div class="card-heading">
+
+          <span>📷</span>
+
+          <div>
+
+            <h2>
+              Scan a lifeform
+            </h2>
+
+            <p>
+              Find a plant, bird, insect, flower,
+              fungus, or anything interesting outdoors.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div class="upload-area">
+
+          <div class="upload-icon">
+            🌿
+          </div>
+
+
+          <p class="upload-title">
+            Choose a photo of your discovery
+          </p>
+
+
+          <!-- CUSTOM FILE PICKER -->
+
+          <div class="file-picker">
+
+            <label
+              for="imageInput"
+              class="file-picker-button"
+            >
+              📷 Choose Photo
+            </label>
+
+
+            <span
+              id="fileName"
+              class="file-name"
+            >
+              No photo chosen
+            </span>
+
+
+            <input
+              type="file"
+              id="imageInput"
+              accept="image/*"
+              capture="environment"
+            >
+
+          </div>
+
+
+          <!-- PHOTO PREVIEW -->
+
+          <div
+            id="previewContainer"
+            class="preview-container"
+          >
+
+            <img
+              id="imagePreview"
+              src=""
+              alt="Selected lifeform"
+            >
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="analyzeButton"
+          class="primary-button"
+        >
+          🤖 Identify Lifeform
+        </button>
+
+      </div>
+
+
+      <!-- DISCOVERY -->
+
+      <div class="card discovery-card">
+
+        <div class="card-heading">
+
+          <span>✨</span>
+
+          <div>
+
+            <h2>
+              Discovery
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="emptyDiscovery"
+          class="empty-discovery"
+        >
+
+          <div>
+
+            <div class="empty-icon">
+              🔎
+            </div>
+
+            <p>
+              Your next discovery is waiting outside.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div
+          id="discoveryResult"
+          class="discovery-result"
+        >
+
+          <div class="discovery-title-row">
+
+            <h2 id="discoveryName">
+              Unknown
+            </h2>
+
+          </div>
+
+
+          <div class="tags">
+
+            <span
+              id="discoveryType"
+              class="tag"
+            >
+              Unknown
+            </span>
+
+
+            <span
+              id="discoveryConfidence"
+              class="tag"
+            >
+              Unknown
+            </span>
+
+          </div>
+
+
+          <p
+            id="discoveryDescription"
+            class="discovery-description"
+          ></p>
+
+
+          <div
+            id="rewardMessage"
+            class="reward-message"
+          ></div>
+
+        </div>
+
+      </div>
+
+    </section>
+
+
+    <!-- =====================================
+         COLLECTION
+    ====================================== -->
+
+    <section class="card collection-section">
+
+      <div class="collection-header">
+
+        <div class="card-heading">
+
+          <span>📖</span>
+
+          <div>
+
+            <h2>
+              My Collection
+            </h2>
+
+          </div>
+
+        </div>
+
+
+        <div class="collection-count">
+
+          <span id="discoveryCount">
+            0
+          </span>
+
+          discoveries
+
+        </div>
+
+      </div>
+
+
+      <div
+        id="collection"
+        class="collection-grid"
+      ></div>
+
+    </section>
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer>
+
+      <span>
+        Lifeform
+      </span>
+
+      · Explore.
+      Discover.
+      Build.
+      🌱
+
+    </footer>
+
+  </main>
+
+
+  <!-- =====================================
+       BOTANICAL FIELD JOURNAL
+  ====================================== -->
+
+  <div
+    id="journalModal"
+    class="journal-modal"
+    aria-hidden="true"
+  >
+
+    <div
+      id="journalOverlay"
+      class="journal-overlay"
+    ></div>
+
+
+    <div class="journal-book">
+
+      <button
+        id="journalClose"
+        class="journal-close"
+        aria-label="Close Field Journal"
+      >
+        ×
+      </button>
+
+
+      <!-- LEFT PAGE -->
+
+      <section class="journal-page journal-left">
+
+        <div class="journal-heading">
+
+          <span class="journal-leaf">
+            🌿
+          </span>
+
+          <span>
+            Field Journal
+          </span>
+
+        </div>
+
+
+        <div
+          id="journalPhoto"
+          class="journal-photo"
+        ></div>
+
+
+        <div
+          id="journalPhotoCaption"
+          class="journal-photo-caption"
+        >
+          A new lifeform discovered outdoors.
+        </div>
+
+
+        <div class="journal-rule"></div>
+
+
+        <h2
+          id="journalName"
+          class="journal-name"
+        >
+          Discovery
+        </h2>
+
+
+        <div class="journal-details">
+
+          <div class="journal-detail">
+
+            <span>🌱</span>
+
+            <span>
+
+              <strong>
+                Type
+              </strong>
+
+              <span id="journalType">
+                Unknown
+              </span>
+
+            </span>
+
+          </div>
+
+
+          <div class="journal-detail">
+
+            <span>◎</span>
+
+            <span>
+
+              <strong>
+                Confidence
+              </strong>
+
+              <span id="journalConfidence">
+                Unknown
+              </span>
+
+            </span>
+
+          </div>
+
+
+          <div class="journal-detail">
+
+            <span>📅</span>
+
+            <span>
+
+              <strong>
+                Discovered
+              </strong>
+
+              <span id="journalDate">
+                Unknown
+              </span>
+
+            </span>
+
+          </div>
+
+
+          <div class="journal-detail">
+
+            <span>⭐</span>
+
+            <span>
+
+              <strong>
+                XP Earned
+              </strong>
+
+              <span id="journalXP">
+                +10
+              </span>
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- RIGHT PAGE -->
+
+      <section class="journal-page journal-right">
+
+        <div class="journal-section-title">
+          🌿 About this discovery
+        </div>
+
+
+        <p
+          id="journalDescription"
+          class="journal-description"
+        ></p>
+
+
+        <div class="journal-leaf-decoration">
+          🍃
+        </div>
+
+
+        <div class="journal-note">
+
+          <div class="journal-section-title small">
+            ✦ Explorer's Note
+          </div>
+
+
+          <p class="journal-note-hint">
+            What did you notice?
+            Where did you find it?
+            How did it make you feel?
+          </p>
+
+
+          <textarea
+            id="journalNoteInput"
+            class="journal-note-input"
+            rows="5"
+            maxlength="500"
+            placeholder="Write your observation here..."
+          ></textarea>
+
+
+          <div class="journal-note-actions">
+
+            <button
+              id="journalNoteButton"
+              class="journal-note-button"
+            >
+              ✍️ Save Note
+            </button>
+
+
+            <span
+              id="journalNoteStatus"
+              class="journal-note-status"
+            ></span>
+
+          </div>
+
+        </div>
+
+
+        <button
+          id="journalBack"
+          class="journal-back"
+        >
+          🌿 Back to Collection
+        </button>
+
+      </section>
+
+    </div>
+
+  </div>
+
+
+  <script src="/app.js"></script>
+
+</body>
+
+</html>
