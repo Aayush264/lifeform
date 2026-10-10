@@ -7,14 +7,14 @@ const { Ollama } = require("ollama");
 const { MongoClient } = require("mongodb");
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // ==============================
 // MONGODB
 // ==============================
 
 const mongoClient = new MongoClient(
-  "mongodb://localhost:27017"
+  process.env.MONGODB_URI || "mongodb://localhost:27017"
 );
 
 let db;
